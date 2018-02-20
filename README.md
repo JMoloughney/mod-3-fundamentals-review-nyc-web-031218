@@ -18,7 +18,7 @@ important to complete and review to ensure a clear understanding of concepts.
 ---
 
 There are three types of variables, `var`, `let`, and `const` that can be used
-to store data. Each type acts slightly differently in regards to scope.
+to store data. Each type acts slightly differently, particularly in regards to scope.
 
 ### `var`
 
@@ -47,13 +47,13 @@ console.log(c) // outputs 'hello'
 #### When to Use `var`
 
 The `var` variable type is useful when declaring variables that you want
-accessible and changeable throughout a function.
+accessible and changeable throughout a function.  While there are times when this is necessary, more often than not, we are declaring variables within a specific scope and do not need them eslewhere.  In these cases, we can be more specific than `var` and use `let` or `const`.
 
 ### `let`
 
 * Can be redefined or changed
 * Block scoped - variables declared using `let` can only be accessed within
-  the block it is declared in
+  the block they are declared in
 * Are not accessible before they are assigned
 * Cannot be redeclared in the same scope
 
@@ -62,8 +62,7 @@ let a = "a"
 {
 	let b = "b"
 }
-//will return a reference error:
-console.log(b,c)
+console.log(a,b) // ReferenceError: b is not defined
 ```
 
 Because `b` was declared inside of a block, it is not accessible to the
@@ -75,8 +74,7 @@ let a = "a"
 {
 	a = "c"
 }
-//will output 'c'
-console.log(a)
+console.log(a) //outputs "c"
 ```
 
 #### When to Use `let`
