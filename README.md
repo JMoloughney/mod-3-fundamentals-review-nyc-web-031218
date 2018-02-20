@@ -98,10 +98,13 @@ console.log(x) // logging 'x' outputs 5
 console.log(y) // ReferenceError: y is not defined
 ```
 
-Using `let` in blocks keeps your function scope clear of unnecessary variables.
-It also provides some slightly different functionality in closures, compared to
-`var`. For example, `let` stays bound within the scope of each loop in the
-following code:
+It is unlikely we need to access `x` outside of the for loop above, but using
+`var` will make it accessible.  If you had another `var x` somewhere in your
+code, this could potentially *overwrite* that variable.  Using `let` in blocks
+keeps your function scope clear of these unnecessary variables.  It also
+provides some slightly different functionality in closures, compared to `var`. 
+For example, `let` stays bound within the scope of each loop in the following
+code:
 
 ```
 for (let i = 0; i < 5; ++i) {
@@ -151,7 +154,11 @@ for(let i = 0; i < 5; i++) {
 console.log(timer) // ReferenceError: timer is not defined
 ```
 
-When assigning a `const` variable a value, such as `const a = 5`, `a` _contains_ the value `5`. If we assign an array or object to a `const`, instead of assigning a direct value, the variable points to a reference in memory of that object. This means that while a `const` value can't be redefined, `const` arrays and objects are still mutable:
+When assigning a `const` variable a value, such as `const a = 5`, `a` 
+_contains_ the value `5`. If we assign an array or object to a `const`, instead
+of assigning a direct value, the variable points to a reference in memory of
+that object. This means that while a `const` value can't be redefined, `const` 
+arrays and objects are still mutable:
 
 ```
 const humans = []
