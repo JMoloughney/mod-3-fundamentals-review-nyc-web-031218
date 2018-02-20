@@ -20,13 +20,13 @@ important to complete and review to ensure a clear understanding of concepts.
 There are three types of variables, `var`, `let`, and `const` that can be used
 to store data. Each type acts slightly differently in regards to scope.
 
-### Var
+### `var`
 
 * Can be redefined or changed
 * Function scoped - variables declared using `var` can be read or rewritten
-  anywhere within the function they are declared in, including inside any nested
-  blocks. If a `var` is declared outside of any function, it will be accessible
-  at the global scope.
+  anywhere within the function they are declared in, including inside any
+  nested blocks. If a `var` is declared outside of any function, it will be accessible
+  at the global scope
 * Are accessible before being assigned
 * Can be redeclared in the same scope
 
@@ -49,11 +49,11 @@ console.log(c) // outputs 'hello'
 The `var` variable type is useful when declaring variables that you want
 accessible and changeable throughout a function.
 
-### Let
+### `let`
 
 * Can be redefined or changed
 * Block scoped - variables declared using `let` can only be accessed within
-  the block it is declared in.
+  the block it is declared in
 * Are not accessible before they are assigned
 * Cannot be redeclared in the same scope
 
@@ -120,10 +120,10 @@ for (let i = 0; i < 5; ++i) {
 //i: 5
 ```
 
-Try replacing let with var in the code above. The output will be `5`, five
+Try replacing `let` with `var` in the code above. The output will be `5`, five
 times.
 
-### Const
+### `const`
 
 * Cannot be redefined, changed or redeclared
 * Block scoped - variables declared using `const` can only be accessed within
@@ -153,7 +153,7 @@ for(let i = 0; i < 5; i++) {
 console.log(timer) // ReferenceError: timer is not defined
 ```
 
-The `const` variable can't be redefined, but it is mutable:
+When assigning a `const` variable a value, such as `const a = 5`, `a` _contains_ the value `5`. If we assign an array or object to a `const`, instead of assigning a direct value, the variable points to a reference in memory of that object. This means that while a `const` value can't be redefined, `const` arrays and objects are still mutable:
 
 ```
 const humans = []
@@ -168,6 +168,11 @@ Using `const` on any variables you know you wont need to redefine can help
 prevent unforeseen errors, such as conflicting name assignments. When you use
 `const`, you're also indicating to future readers of your code that this
 variable is meant to be unchanged
+
+It is often the best practice to default to using this strictest scope you can
+when declaring variables; if a `let` works in place of a `var`, use `let` to
+keep your variable only within the scope you need. If the variable should
+never be reassigned after declaration, then use `const`.
 
 ## Arrays and Objects
 
@@ -187,14 +192,14 @@ From the labs, we know that arrays are a type of object that can contain
 multiple values in a list. We can declare arrays in a variety of ways:
 
 ```
-let w = new Array
+const w = new Array
 console.log(w) // []
-let x = new Array(5).fill("hi")
+const x = new Array(5).fill("hi")
 console.log(x) // ["hi","hi","hi","hi","hi"]
 
-let y = []
+const y = []
 console.log(y) // []
-let z = ["hello"]
+const z = ["hello"]
 console.log(z) // ["hello"]
 ```
 
@@ -202,11 +207,11 @@ Arrays can stored all sorts of data types, and are useful when we need to
 iterate through a list in a specific order:
 
 ```
-let a = [1,2,3]
-let b = ["a","b","c"]
-let c = [true, true, false]
-let d = [{id: 1}, {id: 2}]
-let e = [() => console.log("hello"), () => alert("world")]
+const a = [1,2,3]
+const b = ["a","b","c"]
+const c = [true, true, false]
+const d = [{id: 1}, {id: 2}]
+const e = [() => console.log("hello"), () => alert("world")]
 ```
 
 Arrays have a number of specific methods that are very useful for reading
@@ -215,8 +220,8 @@ and manipulating lists:
 #### [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)
 
 ```
-let a = [1,2,3,4,5]
-let b = a.map(element => element + 1)
+const a = [1,2,3,4,5]
+const b = a.map(element => element + 1)
 
 console.log(a) // [1,2,3,4,5]
 console.log(b) // [2,3,4,5,6]
@@ -225,14 +230,14 @@ console.log(b) // [2,3,4,5,6]
 #### [Filter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter)
 
 ```
-let a = [1,2,3,4,5]
-let b = a.filter(element => element > 3)
+const a = [1,2,3,4,5]
+const b = a.filter(element => element > 3)
 
 console.log(a) // [1,2,3,4,5]
 console.log(b) // [4,5]
 
-let c = ["a", "b", "c"]
-let d = c.filter(element => element !== "b")
+const c = ["a", "b", "c"]
+const d = c.filter(element => element !== "b")
 
 console.log(c) // ["a", "b", "c"]
 console.log(d) // ["a", "c"]
@@ -241,14 +246,14 @@ console.log(d) // ["a", "c"]
 #### [Reduce](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce)
 
 ```
-let a = [1,2,3,4,5]
-let b = a.reduce((accumulator, currentValue) => accumulator + currentValue)
+const a = [1,2,3,4,5]
+const b = a.reduce((accumulator, currentValue) => accumulator + currentValue)
 
 console.log(a) // [1,2,3,4,5]
 console.log(b) // 15, the sum of all values in the array
 
-let c = [[1], [2, 3], [4, 5]]
-let d = c.reduce((accumulator, currentValue) => accumulator.concat(currentValue))
+const c = [[1], [2, 3], [4, 5]]
+const d = c.reduce((accumulator, currentValue) => accumulator.concat(currentValue))
 
 console.log(c) // [[1], [2, 3], [4, 5]]
 console.log(d) // [1, 2, 3, 4, 5]
@@ -257,14 +262,14 @@ console.log(d) // [1, 2, 3, 4, 5]
 #### [Splice](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice)
 
 ```
-let a = ["x","y","z"]
-let b = a.splice(1,1)
+const a = ["x","y","z"]
+const b = a.splice(1,1)
 
 console.log(a) // ["x", "z"]
 console.log(b) // ["y"]
 
-let c = ["a","b","d","e"]
-let d = a.splice(2,0,"c")
+const c = ["a","b","d","e"]
+const d = c.splice(2,0,"c")
 
 console.log(c) // ["a","b","c","d","e"]
 console.log(d) // []
@@ -272,22 +277,22 @@ console.log(d) // []
 
 #### Using the Spread Operator on Arrays
 
-The spread operator is new feature of ES6 that can be used to make a copy of
+The spread operator is a new feature of ES6 that can be used to make a copy of
 an array and in place of array concatenation:
 
 ```
-let a = [1,2,3]
-let b = a
+const a = [1,2,3]
+const b = a
 
 console.log(b) // [1,2,3]
 
-let c = [1,2,3]
-let d = [...c]
+const c = [1,2,3]
+const d = [...c]
 
 console.log(d) // [1,2,3]
 
-let e = [1,2,3]
-let d = [...e, 4]
+const e = [1,2,3]
+const d = [...e, 4]
 
 console.log(d) // [1,2,3,4]
 ```
@@ -298,17 +303,34 @@ Objects, like arrays, can contain multiple values, but instead of storing
 them in a list, each value is store with a corresponding key:
 
 ```
-let a = new Object // a === {}
-let b = {} // b === {}
+const a = new Object // a === {}
+const b = {} // b === {}
 ```
 
 Objects are great for storing sets of related data, including functions.
 
 ```
-let a = {name: "Steve", sayHi: () => console.log("hello")}
+const a = {name: "Steve", sayHi: () => console.log("hello")}
 ```
 
 This makes objects very versatile and handy when you have complex return values.
+
+```
+function returnPerson() {
+	const id = 1
+	const name = "Steve"
+	const sayHi = () => console.log('hi')
+
+	return {
+		id: id,
+		name: name,
+		sayHi: sayHi
+	}
+}
+
+const a = returnPerson() // a === {id: 1, name: "Steve", sayHi: ƒ}
+a.sayHi() // outputs 'hi'
+```
 
 #### Iterating Using Objects
 
@@ -316,31 +338,37 @@ It is possible to iterate over the values in any object like an array using
 Object.keys():
 
 ```
-let a = {id: 1, name: "Steve", password: "123"}
-let b = Object.keys(a)
+const a = {id: 1, name: "Steve", password: "123"}
+const b = Object.keys(a)
 console.log(b) // ["id", "name", "password"]
 
-let c = b.map(element => a[element])
+const c = b.map(element => a[element])
 console.log(c) // [1, "Steve", "123"]
 ```
 
-#### The Advantages of Instant Lookup - O(1)
+#### The Advantages of Instant Lookup
 
 Because each value in an object has a corresponding key, looking up something
-stored in an object is instant. Arrays on the other hand, are O(n), meaning the
-amount of time it takes to look through and find a value in an array depends on
-the length of the array. When dealing with large sets of data, even a list, it
-is more performant to use objects:
+stored in an object is instant. On the other hand, finding something in an
+array requires us to iterate through the array, so the amount of time will
+depend on the length of the array. When dealing with large sets of data, even a
+list, it is more performant to use objects:
 
 ```
-let a = [{id: 1, name: "Steve"}, {id: 2, name: "Mike"}]
-let b = {"Steve": {id: 1, name: "Steve"}, "Mike": {id: 2, name: "Mike"}}
+const a = [
+	{id: 1, name: "Steve"},
+	{id: 2, name: "Mike"}
+]
+const b = {
+	"Steve": {id: 1, name: "Steve"},
+	"Mike": {id: 2, name: "Mike"}
+}
 
 // to find Mike the array above, you must iterate through it:
-let c = a.find(element => element.name === "Mike")
+const c = a.find(element => element.name === "Mike")
 
-// to find Mike in object:
-let d = b["Mike"]
+// to find Mike in an object:
+const d = b["Mike"]
 ```
 
 #### Destructuring Objects
@@ -349,7 +377,7 @@ Another new feature in JavaScript is the destructuring of objects into
 variables assigned to the objects values:
 
 ```
-let a = {id: 1, name: "Steve", password: "123"}
+const a = {id: 1, name: "Steve", password: "123"}
 const { id, name, password } = a;
 
 console.log(id, name, password) // 1 "Steve" "123"
@@ -359,7 +387,7 @@ This can be useful for making your code more readable and is also handy for
 extracting specific values of an object being passed into a function:
 
 ```
-let a = {id: 1, name: "Steve", password: "123"}
+const a = {id: 1, name: "Steve", password: "123"}
 
 sayName(a)
 
@@ -374,35 +402,35 @@ name, JS will interpret it as the key and assign that key the value of the
 variable:
 
 ```
-let id = 1
-let a = {id}
-console.log(a) // {id: 1}
+const id = 1
+const a = {id}
+console.log(a) // outputs {id: 1}
 ```
 
 #### Using the Spread Operator on Objects
 
-When the spread operator is used on an object, like arrays, it creates returns
+When the spread operator is used on an object, like arrays, it returns
 a copy of the object it is applied to. This can be useful when we need to
-modify a specific part of an object, or add a key:
+modify a specific part of an object, or add a key/value:
 
 ```
-let a = {id: 1, name: "Steve"}
-let b = Object.assign({}, a)
+const a = {id: 1, name: "Steve"}
+const b = Object.assign({}, a)
 
 console.log(b) // {id: 1, name: "Steve"}
 
-let c = {id: 1, name: "Steve"}
-let d = {...c}
+const c = {id: 1, name: "Steve"}
+const d = {...c}
 
 console.log(d) // {id: 1, name: "Steve"}
 
-let e = {id: 1, name: "Steve"}
-let f = {...e, name: "Mike"}
+const e = {id: 1, name: "Steve"}
+const f = {...e, name: "Mike"}
 
 console.log(f) // {id: 1, name: "Mike"}
 
-let f = {id: 1, name: "Steve"}
-let g = {...f, password: "123"}
+const f = {id: 1, name: "Steve"}
+const g = {...f, password: "123"}
 
 console.log(g) // {id: 1, name: "Steve", password: "123"}
 ```
@@ -419,7 +447,7 @@ console.log(g) // {id: 1, name: "Steve", password: "123"}
 ---
 
 Arrow functions were introduced in ES6, so there are now a variety of ways to
-declare a function. All 3 functions below operate the same:
+declare a function. All 3 of the below functions are valid:
 
 ```
 function sayHi() {
@@ -441,8 +469,8 @@ sayHi3();
 
 One difference to note: if you're assigning a function to a `let` or `const`,
 the function will be initialized and assigned when called, making it only
-accessible _after_ it is defined. Declaring a function in the traditional form
-(`function sayHi() {...}`) will hoist and initialize the function at the
+accessible _after_ it is defined. Declaring a function in the traditional form,
+`function sayHi() {...}`, will hoist and initialize the function at the
 beginning of the execution context, making it available throughout the scope.
 
 #### Arrow Functions
@@ -452,15 +480,15 @@ providing some additional features. All three of the following function
 definitions return the same value:
 
 ```
-let a = () => {
-	let x = 'hi'
+const a = () => {
+	const x = 'hi'
 	return x
 }
-let b = () => (
-	let x = 'hi'
+const b = () => (
+	const x = 'hi'
 	x
 )
-let c = () => 'hi'
+const c = () => 'hi'
 ```
 
 Using `{ }` in an arrow function requires an explicit `return` statement to
@@ -475,26 +503,26 @@ but do not need to assign it a name. In these cases, we use 'anonymous'
 functions:
 
 ```
-let a = [1,2,3]
+const a = [1,2,3]
 
 //normal function declaration
-let addOne = (element) => {
+const addOne = element => {
 	element+1
 }
 
 //to use this function in a map, we pass in the definition
-let b = a.map(addOne) // b === [2,3,4]
+const b = a.map(addOne) // b === [2,3,4]
 
 //with an anonymous function, we define the function in the same line
-let c = a.map((element) => element + 1) // c === [2,3,4]
+const c = a.map(element => element + 1) // c === [2,3,4]
 ```
 
 Immediately Invoked Function Expressions are a type of anonymous function that
 is defined and called immediately:
 
 ```
-// normal arrow function definition and call on the next line
-let a = () => console.log('hi')
+// normal arrow function definition and call on two lines
+const a = () => console.log('hi')
 a()
 
 //This IIFE defines and calls on the same line
@@ -514,13 +542,16 @@ In JavaScript, functions are actually a type of object, and can be returned
 from a function in the same way a value can:
 
 ```
-let a = () => {
+const a = () => {
 	return () => {
 		console.log('hi')
 	}
 }
-let b = a()
+
+const b = a()
+
 console.log(b) // outputs the definition () => {console.log('hi')}
+
 b() // outputs 'hi'
 ```
 
@@ -530,18 +561,22 @@ features of JavaScript! Closures have a special ability: any variables declared
 in the same scope as the function being returned will be stored as well.
 
 ```
-let a = () => {
-	let x = 5
+const a = () => {
+	const x = 5
 	return (y) => {
 		console.log(x+y) // x is defined in the closure, y is an input for the returned function
 	}
 }
 
-let b = a()
+const b = a()
 b(2) // outputs 7, 5 + 2
-let c = a()
+const c = a()
 c(3) // outputs 8, 5 + 3
 ```
 
 The variable `x` can be considered a sort of 'private' variable. It can't be
-accessed directly, but can be read or modified.
+accessed directly, but can be read, and if declared using `let`, modified.
+
+## Your Challenge
+
+Let's put these concepts to use and practice some of the fundamentals...
