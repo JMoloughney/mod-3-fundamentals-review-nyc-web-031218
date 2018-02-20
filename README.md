@@ -27,8 +27,8 @@ to store data. Each type acts slightly differently in regards to scope.
   anywhere within the function they are declared in, including inside any nested
   blocks. If a `var` is declared outside of any function, it will be accessible
   at the global scope.
-* are accessible before being assigned
-* can be redeclared in the same scope
+* Are accessible before being assigned
+* Can be redeclared in the same scope
 
 ```
 var a = "a"
@@ -54,7 +54,7 @@ accessible and changeable throughout a function.
 * Can be redefined or changed
 * Block scoped - variables declared using `let` can only be accessed within
   the block it is declared in.
-* are not accessible before they are assigned
+* Are not accessible before they are assigned
 * Cannot be redeclared in the same scope
 
 ```
