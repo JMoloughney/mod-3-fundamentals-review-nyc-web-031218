@@ -285,11 +285,13 @@ const a = [1,2,3]
 const b = a
 
 console.log(b) // [1,2,3]
+console.log(a === b) // true, because they both reference the same point in memory
 
 const c = [1,2,3]
 const d = [...c]
 
 console.log(d) // [1,2,3]
+console.log(c === d) // false, because the spread operator has created a new array reference
 
 const e = [1,2,3]
 const d = [...e, 4]
