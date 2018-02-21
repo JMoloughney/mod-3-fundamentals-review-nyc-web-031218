@@ -541,10 +541,7 @@ console.log(b) // outputs the function object
 b() // outputs 'hi'
 ```
 
-In the above example, `b` is assigned the definition of the returned function in
-`a()`. This may seem redundant, but it's actually one of the most powerful
-features of JavaScript! Closures have a special ability: any variables declared
-in the same scope as the function being returned will be stored as well.
+In the above example, the return value of `a` (a function object) is assigned to `b`. This may seem redundant, but it's actually one of the most powerful features of JavaScript! Closures have a special ability: any variables declared in the same scope as the function being returned will be stored as well.
 
 ```javascript
 const a = () => {
