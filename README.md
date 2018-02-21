@@ -25,7 +25,7 @@ There are three types of variables, `var`, `let`, and `const`, that can be used 
 * Are **hoisted**, meaning they are accessible before being assigned
 * Can be redeclared in the same scope
 
-```
+```javascript
 // global scope
 var a = 1
 
@@ -56,7 +56,7 @@ The `var` variable type is useful when declaring variables that you want accessi
 * Are not **hoisted**, meaning they are not accessible before they are assigned
 * Cannot be redeclared in the same scope
 
-```
+```javascript
 // global scope
 let a = 1
 
@@ -94,7 +94,7 @@ Using `let` restricts a variable to a tighter bound scope, which keeps our names
 
 Try running the following two for loops in your browser console:
 
-```
+```javascript
 for (var x = 0; x < 5; x++) {
   console.log('hello')
 }
@@ -110,7 +110,7 @@ console.log(y) // ReferenceError: y is not defined
 
 It is unlikely we need to access `x` outside of the for loop above, but using `var` will make it accessible. If you had another `var x` somewhere in your code, this could potentially *overwrite* that variable. Using `let` in blocks keeps your function scope clear of these unnecessary variables. It also provides some slightly different functionality in closures, compared to `var`. For example, `let` stays bound within the scope of each loop in the following code:
 
-```
+```javascript
 for (let i = 0; i < 5; ++i) {
   setTimeout(function () {
     console.log("i: ",i);
@@ -135,21 +135,18 @@ times.
 * Are not **hoisted**, meaning they are not accessible before they are assigned
 * Must be _defined_ when they are _declared_, e.g. a value must be provided when they are created (see `x` example below)
 
-```
+```javascript
 const x // SyntaxError: Missing initializer in const declaration
 
 const a = 10
 console.log(a) // 10
 
 a = 11 // TypeError: Assignment to constant variable.
-
-
-
 ```
 
 Since `const` and `let` are both block scoped, we can use the two in similar situations. The `const` variable is bound to the scope of each iteration in a loop (it is redefined each loop), so, although we can't change the value once declared, we can still use them:
 
-```
+```javascript
 for (let i = 0; i < 5; i++) {
 	const timer = performance.now()
 	console.log(timer) // Outputs the time in milliseconds each loop
@@ -159,9 +156,9 @@ console.log(timer) // ReferenceError: timer is not defined
 ```
 
 When assigning to a `const` variable a value, such as `const a = 5`, `a`
-_contains_ the value `5`. If we assign an array or object to a `const`, instead of assigning a direct value, the variable points to a reference in memory of that object. This means that while a `const` value can't be redefined, `const` objects are still mutable:
+_contains_ the value `5`. If we assign an object to a `const`, instead of assigning a value, the variable points to a place in memory where that object's data is stored. This means that while a `const` value can't be redefined, the underlying objects they may reference are still mutable:
 
-```
+```javascript
 const humans = []
 console.log(humans) // outputs []
 humans.push('Steve')
@@ -170,15 +167,29 @@ console.log(humans)  // outputs ['Steve']
 
 #### When to Use `const`
 
-Using `const` on any variables you know you wont need to redefine can help
+Using `const` on any variables you know you won't need to redefine can help
 prevent unforeseen errors, such as conflicting name assignments. When you use
 `const`, you're also indicating to future readers of your code that this
-variable is meant to be unchanged
+variable is meant to be fixed.
 
 It is often the best practice to default to using this strictest scope you can
 when declaring variables; if a `let` works in place of a `var`, use `let` to
 keep your variable only within the scope you need. If the variable should
 never be reassigned after declaration, then use `const`.
+
+#### Summary
+
+In general, we want to be 'strict' with our `var`, `let`, `const` usage, that is: pick the tightest bound, most restricting option available. If you aren't already in the habit of doing this, follow this logic flow when deciding what to use until it becomes second nature:
+```javascript
+function pickAVariableType(myVariable) {
+  if ("I can use const and it works correctly") {
+    return const
+  } else if ("I can use let and it works correctly") {
+    return let
+  }
+  return var
+}
+```
 
 ## Arrays and Objects
 
