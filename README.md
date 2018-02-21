@@ -206,122 +206,116 @@ function pickAVariableType(myVariable) {
 ### Arrays
 
 From the labs, we know that arrays are a type of object that can contain
-multiple values in a list. We can declare arrays in a variety of ways:
+multiple values that stay in order. We can declare arrays in a variety of ways:
 
-```
-const w = new Array
+```javascript
+const w = new Array // (e.g. const w = [])
 console.log(w) // []
 const x = new Array(5).fill("hi")
-console.log(x) // ["hi","hi","hi","hi","hi"]
-
-const y = []
-console.log(y) // []
-const z = ["hello"]
-console.log(z) // ["hello"]
+console.log(x) // [ 'hi', 'hi', 'hi', 'hi', 'hi' ]
 ```
 
-Arrays can stored all sorts of data types, and are useful when we need to
-iterate through a list in a specific order:
+Arrays can store all sorts of data types, and are useful when we need to
+iterate through a collection in a specific order:
 
-```
-const a = [1,2,3]
-const b = ["a","b","c"]
+```javascript
+const a = [1, 2, 3]
+const b = ["a", "b", "c"]
 const c = [true, true, false]
 const d = [{id: 1}, {id: 2}]
-const e = [() => console.log("hello"), () => alert("world")]
+const e = [ (() => console.log("hello")), (function(x) {alert(x)}) ]
 ```
 
 Arrays have a number of specific methods that are very useful for reading
-and manipulating lists:
+and manipulating collections. Most of our higher order iterators are built on [forEach](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/foreach), so make sure to review the [documentation for it](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/foreach) now:
 
 #### [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)
 
-```
-const a = [1,2,3,4,5]
+```javascript
+const a = [1, 2, 3, 4, 5]
 const b = a.map(element => element + 1)
 
-console.log(a) // [1,2,3,4,5]
-console.log(b) // [2,3,4,5,6]
+console.log(a) // [ 1, 2, 3, 4, 5 ]
+console.log(b) // [ 2, 3, 4, 5, 6 ]
 ```
 
 #### [Filter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter)
 
-```
-const a = [1,2,3,4,5]
+```javascript
+const a = [1, 2, 3, 4, 5]
 const b = a.filter(element => element > 3)
 
-console.log(a) // [1,2,3,4,5]
-console.log(b) // [4,5]
+console.log(a) // [ 1, 2, 3, 4, 5 ]
+console.log(b) // [ 4, 5 ]
 
 const c = ["a", "b", "c"]
 const d = c.filter(element => element !== "b")
 
-console.log(c) // ["a", "b", "c"]
-console.log(d) // ["a", "c"]
+console.log(c) // [ "a", "b", "c" ]
+console.log(d) // [ "a", "c" ]
 ```
 
 #### [Reduce](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce)
 
-```
-const a = [1,2,3,4,5]
+```javascript
+const a = [1, 2, 3, 4, 5]
 const b = a.reduce((accumulator, currentValue) => accumulator + currentValue)
 
-console.log(a) // [1,2,3,4,5]
+console.log(a) // [ 1, 2, 3, 4, 5 ]
 console.log(b) // 15, the sum of all values in the array
 
 const c = [[1], [2, 3], [4, 5]]
 const d = c.reduce((accumulator, currentValue) => accumulator.concat(currentValue))
 
-console.log(c) // [[1], [2, 3], [4, 5]]
-console.log(d) // [1, 2, 3, 4, 5]
+console.log(c) // [ [1], [2, 3], [4, 5] ]
+console.log(d) // [ 1, 2, 3, 4, 5 ]
 ```
 
 #### [Splice](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice)
 
-```
-const a = ["x","y","z"]
-const b = a.splice(1,1)
+```javascript
+const a = ["x", "y", "z"]
+const b = a.splice(1, 1)
 
-console.log(a) // ["x", "z"]
-console.log(b) // ["y"]
+console.log(a) // [ "x", "z" ]
+console.log(b) // [ "y" ]
 
-const c = ["a","b","d","e"]
-const d = c.splice(2,0,"c")
+const c = ["a", "b", "d", "e"]
+const d = c.splice(2, 0, "c")
 
-console.log(c) // ["a","b","c","d","e"]
+console.log(c) // [ "a", "b", "c", "d", "e" ]
 console.log(d) // []
 ```
 
-#### Using the Spread Operator on Arrays
+#### Using the Spread Operator (Destructuring) on Arrays
 
 The spread operator is a new feature of ES6 that can be used to make a copy of
 an array and in place of array concatenation:
 
-```
-const a = [1,2,3]
+```javascript
+const a = [1, 2, 3]
 const b = a
 
-console.log(b) // [1,2,3]
-console.log(a === b) // true, because they both reference the same point in memory
+console.log(b) // [ 1, 2, 3 ]
+console.log(a === b) // true, because they both reference the same object in memory
 
-const c = [1,2,3]
+const c = [1, 2, 3]
 const d = [...c]
 
-console.log(d) // [1,2,3]
-console.log(c === d) // false, because the spread operator has created a new array reference
+console.log(d) // [ 1, 2, 3 ]
+console.log(c === d) // false, because the spread operator has created a new object in memory
 
-const e = [1,2,3]
+const e = [1, 2, 3]
 const d = [...e, 4]
 
-console.log(d) // [1,2,3,4]
+console.log(d) // [ 1, 2, 3, 4 ]
 ```
 
 ### Objects
 
-Objects, like arrays, can contain multiple values, but instead of storing
-them in a list, each value is store with a corresponding key:
+Objects can contain multiple values, with each value mapped to a corresponding key:
 
-```
+```javascript
 const a = new Object // a === {}
 const b = {} // b === {}
 ```
@@ -334,7 +328,7 @@ const a = {name: "Steve", sayHi: () => console.log("hello")}
 
 This makes objects very versatile and handy when you have complex return values.
 
-```
+```javascript
 function returnPerson() {
 	const id = 1
 	const name = "Steve"
@@ -356,7 +350,7 @@ a.sayHi() // outputs 'hi'
 It is possible to iterate over the values in any object like an array using
 Object.keys():
 
-```
+```javascript
 const a = {id: 1, name: "Steve", password: "123"}
 const b = Object.keys(a)
 console.log(b) // ["id", "name", "password"]
@@ -373,7 +367,7 @@ array requires us to iterate through the array, so the amount of time will
 depend on the length of the array. When dealing with large sets of data, even a
 list, it is more performant to use objects:
 
-```
+```javascript
 const a = [
 	{id: 1, name: "Steve"},
 	{id: 2, name: "Mike"}
@@ -395,7 +389,7 @@ const d = b["Mike"]
 Another new feature in JavaScript is the destructuring of objects into
 variables assigned to the objects values:
 
-```
+```javascript
 const a = {id: 1, name: "Steve", password: "123"}
 const { id, name, password } = a;
 
@@ -405,7 +399,7 @@ console.log(id, name, password) // 1 "Steve" "123"
 This can be useful for making your code more readable and is also handy for
 extracting specific values of an object being passed into a function:
 
-```
+```javascript
 const a = {id: 1, name: "Steve", password: "123"}
 
 sayName(a)
@@ -420,7 +414,7 @@ Instead of having to write out a key and value, if you provide just a variable
 name, JS will interpret it as the key and assign that key the value of the
 variable:
 
-```
+```javascript
 const id = 1
 const a = {id}
 console.log(a) // outputs {id: 1}
@@ -432,7 +426,7 @@ When the spread operator is used on an object, like arrays, it returns
 a copy of the object it is applied to. This can be useful when we need to
 modify a specific part of an object, or add a key/value:
 
-```
+```javascript
 const a = {id: 1, name: "Steve"}
 const b = Object.assign({}, a)
 
@@ -468,7 +462,7 @@ console.log(g) // {id: 1, name: "Steve", password: "123"}
 Arrow functions were introduced in ES6, so there are now a variety of ways to
 declare a function. All 3 of the below functions are valid:
 
-```
+```javascript
 function sayHi() {
 	return "hi"
 }
@@ -498,7 +492,7 @@ Arrow functions provide a shorter way to declare functions, while also
 providing some additional features. All three of the following function
 definitions return the same value:
 
-```
+```javascript
 const a = () => {
 	const x = 'hi'
 	return x
@@ -521,7 +515,7 @@ There are often times when we need to declare a function for a specific use,
 but do not need to assign it a name. In these cases, we use 'anonymous'
 functions:
 
-```
+```javascript
 const a = [1,2,3]
 
 //normal function declaration
@@ -539,7 +533,7 @@ const c = a.map(element => element + 1) // c === [2,3,4]
 Immediately Invoked Function Expressions are a type of anonymous function that
 is defined and called immediately:
 
-```
+```javascript
 // normal arrow function definition and call on two lines
 const a = () => console.log('hi')
 a()
@@ -560,7 +554,7 @@ a()
 In JavaScript, functions are actually a type of object, and can be returned
 from a function in the same way a value can:
 
-```
+```javascript
 const a = () => {
 	return () => {
 		console.log('hi')
@@ -579,7 +573,7 @@ In the above example, b is assigned the definition of the returned function in
 features of JavaScript! Closures have a special ability: any variables declared
 in the same scope as the function being returned will be stored as well.
 
-```
+```javascript
 const a = () => {
 	const x = 5
 	return (y) => {
