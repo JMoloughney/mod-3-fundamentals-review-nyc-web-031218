@@ -23,7 +23,7 @@ to store data. Each type acts slightly differently, particularly in regards to s
 ### `var`
 
 * Are function scoped - variables declared using `var` can be read or rewritten anywhere within the function they are declared in, including inside any nested blocks. If a `var` is declared outside of an enclosing function, it will be accessible at the global scope
-* Are accessible before being assigned
+* Are **hoisted**, meaning they are accessible before being assigned
 * Can be redeclared in the same scope
 
 ```
@@ -47,7 +47,7 @@ accessible and changeable throughout a function.  While there are times when thi
 
 * Block scoped - variables declared using `let` can only be accessed within
   the block they are declared in
-* Are not accessible before they are assigned
+* Are not **hoisted**, meaning they are not accessible before they are assigned
 * Cannot be redeclared in the same scope
 
 ```
