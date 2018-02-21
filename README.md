@@ -490,26 +490,17 @@ function x() {
 
 #### Arrow Functions
 
-Arrow functions provide a shorter way to define functions, while also
-providing some additional features. All three of the following function
-definitions return the same value:
+Arrow functions provide a shorter way to define functions, while also providing some additional features. All three of the following functions would return the same value if executed:
 
 ```javascript
-const a = () => {
-	return 'hi'
-}
+() => { return 'hi' }
 
-const b = () => (
-	'hi'
-)
+() => ( 'hi' )
 
-const c = () => 'hi'
+() => 'hi'
 ```
 
-Using `{ }` in an arrow function requires an explicit `return` statement to
-indicate which value should be returned. Using `( )` instead allows for the
-implicit return of the last line. For single line functions, no parentheses or
-curly brackets are needed, the function will return the value of the statement.
+In an arrow function using `{ }` does not have an explicit `return` statement, then `undefined` is returned by default. Using `( )` instead allows for the implicit return of the last expression. For single line functions, no parentheses or curly brackets are needed, the function will return the value of the expression.
 
 #### Anonymous Functions and Immediately Invoked Function Expressions
 
