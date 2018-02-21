@@ -17,31 +17,26 @@ important to complete and review to ensure a clear understanding of concepts.
 
 ---
 
-There are three types of variables, `var`, `let`, and `const` that can be used
+There are three types of variables, `var`, `let`, and `const`, that can be used
 to store data. Each type acts slightly differently, particularly in regards to scope.
 
 ### `var`
 
 * Can be redefined or changed
-* Function scoped - variables declared using `var` can be read or rewritten
-  anywhere within the function they are declared in, including inside any
-  nested blocks. If a `var` is declared outside of any function, it will be accessible
-  at the global scope
+* Are function scoped - variables declared using `var` can be read or rewritten anywhere within the function they are declared in, including inside any nested blocks. If a `var` is declared outside of an enclosing function, it will be accessible at the global scope
 * Are accessible before being assigned
 * Can be redeclared in the same scope
 
 ```
-var a = "a"
-{
-	var b = "b"
+var a = 1
+function x() {
+  var b = 2
+  console.log(a) // outputs 1
 }
 
-console.log(a,b) // outputs 'b c'
-
-var c = []
-console.log(c) // outputs '[]'
-var c = "hello"
-console.log(c) // outputs 'hello'
+console.log(x()) // outputs 1
+console.log(a)   // outputs 1
+console.log(b)   // ReferenceError: b is not defined
 ```
 
 #### When to Use `var`
@@ -102,7 +97,7 @@ It is unlikely we need to access `x` outside of the for loop above, but using
 `var` will make it accessible.  If you had another `var x` somewhere in your
 code, this could potentially *overwrite* that variable.  Using `let` in blocks
 keeps your function scope clear of these unnecessary variables.  It also
-provides some slightly different functionality in closures, compared to `var`. 
+provides some slightly different functionality in closures, compared to `var`.
 For example, `let` stays bound within the scope of each loop in the following
 code:
 
@@ -154,10 +149,10 @@ for(let i = 0; i < 5; i++) {
 console.log(timer) // ReferenceError: timer is not defined
 ```
 
-When assigning a `const` variable a value, such as `const a = 5`, `a` 
+When assigning a `const` variable a value, such as `const a = 5`, `a`
 _contains_ the value `5`. If we assign an array or object to a `const`, instead
 of assigning a direct value, the variable points to a reference in memory of
-that object. This means that while a `const` value can't be redefined, `const` 
+that object. This means that while a `const` value can't be redefined, `const`
 arrays and objects are still mutable:
 
 ```
