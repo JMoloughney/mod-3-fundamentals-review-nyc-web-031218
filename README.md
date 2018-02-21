@@ -458,47 +458,51 @@ console.log(g) // {id: 1, name: "Steve", password: "123"}
 
 ---
 
-Arrow functions were introduced in ES6. All 3 of the below functions are valid:
+Arrow functions were introduced in ES6. All three of the below functions are valid:
 
 ```javascript
+// 1 named function
 function sayHi() {
 	return "hi"
 }
 
-const sayHi2 = function() {
-	return 'hi'
-}
+// 2 anonymous function
+(function() { return 'hi' })
 
-const sayHi3 = () => {
-	return 'hi'
-}
+// 3 anonymous function
+(() => { return 'hi' })
 
-sayHi();
-sayHi2();
-sayHi3();
+sayHi()
+sayHi2()
+sayHi3()
 ```
 
-One difference to note: if you're assigning a function to a `let` or `const`,
-the function will be initialized and assigned when called, making it only
-accessible _after_ it is defined. Declaring a function in the traditional form,
-`function sayHi() {...}`, will hoist and initialize the function at the
-beginning of the execution context, making it available throughout the scope.
+While both of our anonymous function can be assigned to variables (i.e. `const a = () => { return 'hi' }`, there is an important difference between them and named functions:
+* anonymous functions are initialized and assigned when the program executes the line they are on _while running_ (aka "at runtime"), making it only invokable _after_ its point of definition. Declaring a function in the traditional form, `function sayHi() {...}`, will _hoist_ the function, making it available for use throughout the scope, i.e.:
+
+```JavaScript
+x() // 'choux is a good cat'
+
+function x() {
+  console.log('choux is a good cat');
+}
+```
 
 #### Arrow Functions
 
-Arrow functions provide a shorter way to declare functions, while also
+Arrow functions provide a shorter way to define functions, while also
 providing some additional features. All three of the following function
 definitions return the same value:
 
 ```javascript
 const a = () => {
-	const x = 'hi'
-	return x
+	return 'hi'
 }
+
 const b = () => (
-	const x = 'hi'
-	x
+	'hi'
 )
+
 const c = () => 'hi'
 ```
 
