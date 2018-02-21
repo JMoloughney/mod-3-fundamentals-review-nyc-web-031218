@@ -502,38 +502,20 @@ Arrow functions provide a shorter way to define functions, while also providing 
 
 In an arrow function using `{ }` does not have an explicit `return` statement, then `undefined` is returned by default. Using `( )` instead allows for the implicit return of the last expression. For single line functions, no parentheses or curly brackets are needed, the function will return the value of the expression.
 
-#### Anonymous Functions and Immediately Invoked Function Expressions
+#### Immediately Invoked Function Expressions
 
-There are often times when we need to declare a function for a specific use,
-but do not need to assign it a name. In these cases, we use 'anonymous'
-functions:
-
-```javascript
-const a = [1,2,3]
-
-//normal function declaration
-const addOne = element => {
-	element+1
-}
-
-//to use this function in a map, we pass in the definition
-const b = a.map(addOne) // b === [2,3,4]
-
-//with an anonymous function, we define the function in the same line
-const c = a.map(element => element + 1) // c === [2,3,4]
-```
-
-Immediately Invoked Function Expressions are a type of anonymous function that
-is defined and called immediately:
+An Immediately Invoked Function Expressions (IIFE) defines and then invokes a function all in one fell swoop.
 
 ```javascript
 // normal arrow function definition and call on two lines
 const a = () => console.log('hi')
 a()
 
-//This IIFE defines and calls on the same line
+// This IIFE defines and invokes in one expression
 (() => console.log('hi'))()
 ```
+
+There is no magic behind this. To understand why it is possible, and syntactically logical, answer the question: "What does a function definition _itself_ (not a function invocation!) return?"
 
 #### Closures
 
@@ -548,20 +530,18 @@ In JavaScript, functions are actually a type of object, and can be returned
 from a function in the same way a value can:
 
 ```javascript
-const a = () => {
-	return () => {
-		console.log('hi')
-	}
+function a() {
+	return () => { console.log('hi') }
 }
 
 const b = a()
 
-console.log(b) // outputs the definition () => {console.log('hi')}
+console.log(b) // outputs the function object
 
 b() // outputs 'hi'
 ```
 
-In the above example, b is assigned the definition of the returned function in
+In the above example, `b` is assigned the definition of the returned function in
 `a()`. This may seem redundant, but it's actually one of the most powerful
 features of JavaScript! Closures have a special ability: any variables declared
 in the same scope as the function being returned will be stored as well.
