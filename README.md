@@ -316,8 +316,7 @@ console.log(d) // [ 1, 2, 3, 4 ]
 Objects can contain multiple values, with each value mapped to a corresponding key:
 
 ```javascript
-const a = new Object // a === {}
-const b = {} // b === {}
+const a = new Object // (e.g. const a = {})
 ```
 
 Objects are great for storing sets of related data, including functions.
@@ -341,7 +340,7 @@ function returnPerson() {
 	}
 }
 
-const a = returnPerson() // a === {id: 1, name: "Steve", sayHi: ƒ}
+const a = returnPerson() // {id: 1, name: "Steve", sayHi: ƒ}
 a.sayHi() // outputs 'hi'
 ```
 
