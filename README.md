@@ -22,7 +22,6 @@ to store data. Each type acts slightly differently, particularly in regards to s
 
 ### `var`
 
-* Can be redefined or changed
 * Are function scoped - variables declared using `var` can be read or rewritten anywhere within the function they are declared in, including inside any nested blocks. If a `var` is declared outside of an enclosing function, it will be accessible at the global scope
 * Are accessible before being assigned
 * Can be redeclared in the same scope
@@ -42,11 +41,10 @@ console.log(b)   // ReferenceError: b is not defined
 #### When to Use `var`
 
 The `var` variable type is useful when declaring variables that you want
-accessible and changeable throughout a function.  While there are times when this is necessary, more often than not, we are declaring variables within a specific scope and do not need them eslewhere.  In these cases, we can be more specific than `var` and use `let` or `const`.
+accessible and changeable throughout a function.  While there are times when this is necessary, more often than not, we are declaring variables within a specific scope and do not need them elsewhere.  In these cases, we can be more specific than `var` and use `let` or `const`.
 
 ### `let`
 
-* Can be redefined or changed
 * Block scoped - variables declared using `let` can only be accessed within
   the block they are declared in
 * Are not accessible before they are assigned
