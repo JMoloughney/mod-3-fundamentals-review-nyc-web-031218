@@ -340,53 +340,53 @@ function returnPerson() {
 	}
 }
 
-const a = returnPerson() // {id: 1, name: "Steve", sayHi: ƒ}
-a.sayHi() // outputs 'hi'
+const person = returnPerson() // {id: 1, name: "Steve", sayHi: ƒ}
+person.sayHi() // outputs 'hi'
 ```
 
 #### Iterating Using Objects
 
-It is possible to iterate over the values in any object like an array using
-Object.keys():
+It is possible to iterate over both the keys and values of objects:
 
 ```javascript
 const a = {id: 1, name: "Steve", password: "123"}
-const b = Object.keys(a)
-console.log(b) // ["id", "name", "password"]
 
-const c = b.map(element => a[element])
-console.log(c) // [1, "Steve", "123"]
+const keys = Object.keys(a)
+console.log(keys) // the object's keys: [ "id", "name", "password" ]
+
+const values = Object.values(a)
+console.log(values) // the object's values: [ 1, "Steve", "123" ]
 ```
 
 #### The Advantages of Instant Lookup
 
-Because each value in an object has a corresponding key, looking up something
-stored in an object is instant. On the other hand, finding something in an
-array requires us to iterate through the array, so the amount of time will
-depend on the length of the array. When dealing with large sets of data, even a
-list, it is more performant to use objects:
+As each value in an object has a corresponding [hash](https://en.wikipedia.org/wiki/Hash_function) (its key), looking up something stored in an object is instant. In contrast, looking up a value in an array requires us to iterate through the array, so the amount of time will depend on the length of the array. When unique values (keys) can be mapped to the data you would like to store (values), objects should be used over arrays for this reason. Consider the following, in which we would like to access the information about a student:
 
 ```javascript
-const a = [
-	{id: 1, name: "Steve"},
+
+const studentArr = [
+	{id: 1, name: "Molly"},
 	{id: 2, name: "Mike"}
 ]
-const b = {
-	"Steve": {id: 1, name: "Steve"},
+
+const studentObj = {
+	"Molly": {id: 1, name: "Molly"},
 	"Mike": {id: 2, name: "Mike"}
 }
 
-// to find Mike the array above, you must iterate through it:
-const c = a.find(element => element.name === "Mike")
+// to find Mike we must iterate:
+const mike = studentArr.find(student => student.name === "Mike")
+// first examines {id: 1, name: "Molly"}, then {id: 2, name: "Mike"}
 
 // to find Mike in an object:
-const d = b["Mike"]
+const mike = studentObj["Mike"]
+// jumps straight to {id: 2, name: "Mike"} due to the hashed nature of JavaScript object keys
+
 ```
 
 #### Destructuring Objects
 
-Another new feature in JavaScript is the destructuring of objects into
-variables assigned to the objects values:
+Another new feature in JavaScript is the destructuring of objects into variables named after the keys, with the corresponding values:
 
 ```javascript
 const a = {id: 1, name: "Steve", password: "123"}
@@ -421,7 +421,7 @@ console.log(a) // outputs {id: 1}
 
 #### Using the Spread Operator on Objects
 
-When the spread operator is used on an object, like arrays, it returns
+When the spread operator is used on an object it returns
 a copy of the object it is applied to. This can be useful when we need to
 modify a specific part of an object, or add a key/value:
 
@@ -458,8 +458,7 @@ console.log(g) // {id: 1, name: "Steve", password: "123"}
 
 ---
 
-Arrow functions were introduced in ES6, so there are now a variety of ways to
-declare a function. All 3 of the below functions are valid:
+Arrow functions were introduced in ES6. All 3 of the below functions are valid:
 
 ```javascript
 function sayHi() {
