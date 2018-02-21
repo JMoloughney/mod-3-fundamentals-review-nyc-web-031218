@@ -17,8 +17,7 @@ important to complete and review to ensure a clear understanding of concepts.
 
 ---
 
-There are three types of variables, `var`, `let`, and `const`, that can be used
-to store data. Each type acts slightly differently, particularly in regards to scope.
+There are three types of variables, `var`, `let`, and `const`, that can be used to store data. Each type acts slightly differently, particularly in regards to scope.
 
 ### `var`
 
@@ -49,13 +48,11 @@ console.log(c)   // 3
 
 #### When to Use `var`
 
-The `var` variable type is useful when declaring variables that you want
-accessible and changeable throughout a function.  While there are times when this is necessary, more often than not, we are declaring variables within a specific scope and do not need them elsewhere.  In these cases, we can be more specific than `var` and use `let` or `const`.
+The `var` variable type is useful when declaring variables that you want accessible and changeable throughout a function.  While there are times when this is necessary, more often than not, we are declaring variables within a specific scope and do not need them elsewhere.  In these cases, we can be more specific than `var` and use `let` or `const`.
 
 ### `let`
 
-* Block scoped - variables declared using `let` can only be accessed within
-  the block they are declared in
+* Block scoped - variables declared using `let` can only be accessed within the block they are declared in
 * Are not **hoisted**, meaning they are not accessible before they are assigned
 * Cannot be redeclared in the same scope
 
@@ -78,25 +75,22 @@ x()              // 1
 console.log(a)   // 1
 console.log(b)   // ReferenceError: b is not defined
 console.log(c)   // ReferenceError: c is not defined
-```
 
-Because `b` was declared inside of a block, it is not accessible to the
-`console.log`. However, changing `a` inside the block will work, as `a` is
-declared in the same scope (or above) the `console.log`:
-
-```
-let a = "a"
-{
-	a = "c"
+// block scope
+for (let idx = 0; idx < 1; idx++) {
+  a = 4
 }
-console.log(a) //outputs "c"
+
+console.log(a)   // 4
 ```
+
+Take a moment to consider the following questions, and explain your answers to a peer or teacher when you feel you have a strong description:
+* why did `x()` correctly log `a`s value?
+* understanding that `let` keeps block scope, why did the value 4, assigned to `a` in the last for loop's block scope, persist outside of the for loop's block scope?
 
 #### When to Use `let`
 
-Using `let` gives us more options when dealing with scope, and is useful for
-any variables you need within a block, such as a loop, that you do not want
-escaping.
+Using `let` restricts a variable to a tighter bound scope, which keeps our namespaces cleaner and makes us less likely to screw up as programmers. If the variable does not need to be accessed outside of a block, but needs to be reassignable, use `let`.
 
 Try running the following two for loops in your browser console:
 
@@ -104,6 +98,7 @@ Try running the following two for loops in your browser console:
 for (var x = 0; x < 5; x++) {
   console.log('hello')
 }
+
 for (let y = 0; y < 5; y++) {
   console.log('world')
 }
@@ -113,13 +108,7 @@ console.log(x) // logging 'x' outputs 5
 console.log(y) // ReferenceError: y is not defined
 ```
 
-It is unlikely we need to access `x` outside of the for loop above, but using
-`var` will make it accessible.  If you had another `var x` somewhere in your
-code, this could potentially *overwrite* that variable.  Using `let` in blocks
-keeps your function scope clear of these unnecessary variables.  It also
-provides some slightly different functionality in closures, compared to `var`.
-For example, `let` stays bound within the scope of each loop in the following
-code:
+It is unlikely we need to access `x` outside of the for loop above, but using `var` will make it accessible. If you had another `var x` somewhere in your code, this could potentially *overwrite* that variable. Using `let` in blocks keeps your function scope clear of these unnecessary variables. It also provides some slightly different functionality in closures, compared to `var`. For example, `let` stays bound within the scope of each loop in the following code:
 
 ```
 for (let i = 0; i < 5; ++i) {
@@ -141,39 +130,36 @@ times.
 
 ### `const`
 
-* Cannot be redefined, changed or redeclared
-* Block scoped - variables declared using `const` can only be accessed within
-  the block.
-* Must be initialized with a value
+* Cannot be overwritten
+* Block scoped - variables declared using `const` can only be accessed within the block (same scoping restrictinos as `let`)
+* Are not **hoisted**, meaning they are not accessible before they are assigned
+* Must be _defined_ when they are _declared_, e.g. a value must be provided when they are created (see `x` example below)
 
 ```
+const x // SyntaxError: Missing initializer in const declaration
+
 const a = 10
 console.log(a) // 10
 
 a = 11 // TypeError: Assignment to constant variable.
 
-const b // SyntaxError: Missing initializer in const declaration
-```
 
-Since `const` and `let` are both block scoped, we can use the two in similar
-situations. The `const` variable is bound to the scope of each iteration in a
-loop, so, although we can't change the value once declared, we can still use
-them:
 
 ```
-for(let i = 0; i < 5; i++) {
+
+Since `const` and `let` are both block scoped, we can use the two in similar situations. The `const` variable is bound to the scope of each iteration in a loop (it is redefined each loop), so, although we can't change the value once declared, we can still use them:
+
+```
+for (let i = 0; i < 5; i++) {
 	const timer = performance.now()
-	console.log(timer) // Outputs the time in milliseconds of each console.log
+	console.log(timer) // Outputs the time in milliseconds each loop
 }
 
 console.log(timer) // ReferenceError: timer is not defined
 ```
 
-When assigning a `const` variable a value, such as `const a = 5`, `a`
-_contains_ the value `5`. If we assign an array or object to a `const`, instead
-of assigning a direct value, the variable points to a reference in memory of
-that object. This means that while a `const` value can't be redefined, `const`
-arrays and objects are still mutable:
+When assigning to a `const` variable a value, such as `const a = 5`, `a`
+_contains_ the value `5`. If we assign an array or object to a `const`, instead of assigning a direct value, the variable points to a reference in memory of that object. This means that while a `const` value can't be redefined, `const` objects are still mutable:
 
 ```
 const humans = []
