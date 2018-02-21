@@ -27,15 +27,24 @@ to store data. Each type acts slightly differently, particularly in regards to s
 * Can be redeclared in the same scope
 
 ```
+// global scope
 var a = 1
+
+// function scope
 function x() {
   var b = 2
-  console.log(a) // outputs 1
+  console.log(a) // 1
 }
 
-console.log(x()) // outputs 1
-console.log(a)   // outputs 1
+// block scope
+for (let idx = 0; idx < 1; idx++) {
+  var c = 3
+}
+
+x()              // 1
+console.log(a)   // 1
 console.log(b)   // ReferenceError: b is not defined
+console.log(c)   // 3
 ```
 
 #### When to Use `var`
@@ -51,11 +60,24 @@ accessible and changeable throughout a function.  While there are times when thi
 * Cannot be redeclared in the same scope
 
 ```
-let a = "a"
-{
-	let b = "b"
+// global scope
+let a = 1
+
+// function scope
+function x() {
+  let b = 2
+  console.log(a) // 1
 }
-console.log(a,b) // ReferenceError: b is not defined
+
+// block scope
+for (let idx = 0; idx < 1; idx++) {
+  let c = 3
+}
+
+x()              // 1
+console.log(a)   // 1
+console.log(b)   // ReferenceError: b is not defined
+console.log(c)   // ReferenceError: c is not defined
 ```
 
 Because `b` was declared inside of a block, it is not accessible to the
