@@ -534,9 +534,7 @@ function a() {
 	return () => { console.log('hi') }
 }
 
-const b = a()
-
-console.log(b) // outputs the function object
+const b = a() // `b` is a function object (the return value of `a`)
 
 b() // outputs 'hi'
 ```
@@ -547,17 +545,15 @@ In the above example, the return value of `a` (a function object) is assigned to
 const a = () => {
 	const x = 5
 	return (y) => {
-		console.log(x+y) // x is defined in the closure, y is an input for the returned function
+		console.log(x + y) // x is defined in the closure, y is an input for the returned function
 	}
 }
 
 const b = a()
-b(2) // outputs 7, 5 + 2
-const c = a()
-c(3) // outputs 8, 5 + 3
+b(2) // outputs 7
 ```
 
-The variable `x` can be considered a sort of 'private' variable. It can't be
+The variable `x` can be considered a locked inside of a closure. It can't be
 accessed directly, but can be read, and if declared using `let`, modified.
 
 ## Your Challenge
