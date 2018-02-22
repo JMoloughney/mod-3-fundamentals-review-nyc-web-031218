@@ -17,78 +17,88 @@ important to complete and review to ensure a clear understanding of concepts.
 
 ---
 
-There are three types of variables, `var`, `let`, and `const` that can be used
-to store data. Each type acts slightly differently, particularly in regards to scope.
+There are three types of variables, `var`, `let`, and `const`, that can be used to store data. Each type acts slightly differently, particularly in regards to scope.
 
 ### `var`
 
-* Can be redefined or changed
-* Function scoped - variables declared using `var` can be read or rewritten
-  anywhere within the function they are declared in, including inside any
-  nested blocks. If a `var` is declared outside of any function, it will be accessible
-  at the global scope
-* Are accessible before being assigned
+* Are function scoped - variables declared using `var` can be read or rewritten anywhere within the function they are declared in, including inside any nested blocks. If a `var` is declared outside of an enclosing function, it will be accessible at the global scope
+* Are **hoisted**, meaning they are accessible before being assigned
 * Can be redeclared in the same scope
 
-```
-var a = "a"
-{
-	var b = "b"
+```javascript
+// global scope
+var a = 1
+
+// function scope
+function x() {
+  var b = 2
+  console.log(a) // 1
 }
 
-console.log(a,b) // outputs 'b c'
+// block scope
+for (let idx = 0; idx < 1; idx++) {
+  var c = 3
+}
 
-var c = []
-console.log(c) // outputs '[]'
-var c = "hello"
-console.log(c) // outputs 'hello'
+x()              // 1
+console.log(a)   // 1
+console.log(b)   // ReferenceError: b is not defined
+console.log(c)   // 3
 ```
 
 #### When to Use `var`
 
-The `var` variable type is useful when declaring variables that you want
-accessible and changeable throughout a function.  While there are times when this is necessary, more often than not, we are declaring variables within a specific scope and do not need them eslewhere.  In these cases, we can be more specific than `var` and use `let` or `const`.
+The `var` variable type is useful when declaring variables that you want accessible and changeable throughout a function.  While there are times when this is necessary, more often than not, we are declaring variables within a specific scope and do not need them elsewhere.  In these cases, we can be more specific than `var` and use `let` or `const`.
 
 ### `let`
 
-* Can be redefined or changed
-* Block scoped - variables declared using `let` can only be accessed within
-  the block they are declared in
-* Are not accessible before they are assigned
+* Block scoped - variables declared using `let` can only be accessed within the block they are declared in
+* Are not **hoisted**, meaning they are not accessible before they are assigned
 * Cannot be redeclared in the same scope
 
-```
-let a = "a"
-{
-	let b = "b"
+```javascript
+// global scope
+let a = 1
+
+// function scope
+function x() {
+  let b = 2
+  console.log(a) // 1
 }
-console.log(a,b) // ReferenceError: b is not defined
+
+// block scope
+for (let idx = 0; idx < 1; idx++) {
+  let c = 3
+}
+
+x()              // 1
+console.log(a)   // 1
+console.log(b)   // ReferenceError: b is not defined
+console.log(c)   // ReferenceError: c is not defined
+
+// block scope
+for (let idx = 0; idx < 1; idx++) {
+  a = 4
+}
+
+console.log(a)   // 4
 ```
 
-Because `b` was declared inside of a block, it is not accessible to the
-`console.log`. However, changing `a` inside the block will work, as `a` is
-declared in the same scope (or above) the `console.log`:
-
-```
-let a = "a"
-{
-	a = "c"
-}
-console.log(a) //outputs "c"
-```
+Take a moment to consider the following questions, and explain your answers to a peer or teacher when you feel you have a strong description:
+* why did `x()` correctly log `a`s value?
+* understanding that `let` keeps block scope, why did the value 4, assigned to `a` in the last for loop's block scope, persist outside of the for loop's block scope?
 
 #### When to Use `let`
 
-Using `let` gives us more options when dealing with scope, and is useful for
-any variables you need within a block, such as a loop, that you do not want
-escaping.
+Using `let` restricts a variable to a tighter bound scope, which keeps our namespaces cleaner and makes us less likely to screw up as programmers. If the variable does not need to be accessed outside of a block, but needs to be reassignable, use `let`.
 
 Try running the following two for loops in your browser console:
 
-```
+```javascript
 for (var x = 0; x < 5; x++) {
   console.log('hello')
 }
+
 for (let y = 0; y < 5; y++) {
   console.log('world')
 }
@@ -98,15 +108,9 @@ console.log(x) // logging 'x' outputs 5
 console.log(y) // ReferenceError: y is not defined
 ```
 
-It is unlikely we need to access `x` outside of the for loop above, but using
-`var` will make it accessible.  If you had another `var x` somewhere in your
-code, this could potentially *overwrite* that variable.  Using `let` in blocks
-keeps your function scope clear of these unnecessary variables.  It also
-provides some slightly different functionality in closures, compared to `var`. 
-For example, `let` stays bound within the scope of each loop in the following
-code:
+It is unlikely we need to access `x` outside of the for loop above, but using `var` will make it accessible. If you had another `var x` somewhere in your code, this could potentially *overwrite* that variable. Using `let` in blocks keeps your function scope clear of these unnecessary variables. It also provides some slightly different functionality in closures, compared to `var`. For example, `let` stays bound within the scope of each loop in the following code:
 
-```
+```javascript
 for (let i = 0; i < 5; ++i) {
   setTimeout(function () {
     console.log("i: ",i);
@@ -126,41 +130,35 @@ times.
 
 ### `const`
 
-* Cannot be redefined, changed or redeclared
-* Block scoped - variables declared using `const` can only be accessed within
-  the block.
-* Must be initialized with a value
+* Cannot be overwritten
+* Block scoped - variables declared using `const` can only be accessed within the block (same scoping restrictions as `let`)
+* Are not **hoisted**, meaning they are not accessible before they are assigned
+* Must be _defined_ when they are _declared_, e.g. a value must be provided when they are created (see `x` example below)
 
-```
+```javascript
+const x // SyntaxError: Missing initializer in const declaration
+
 const a = 10
 console.log(a) // 10
 
 a = 11 // TypeError: Assignment to constant variable.
-
-const b // SyntaxError: Missing initializer in const declaration
 ```
 
-Since `const` and `let` are both block scoped, we can use the two in similar
-situations. The `const` variable is bound to the scope of each iteration in a
-loop, so, although we can't change the value once declared, we can still use
-them:
+Since `const` and `let` are both block scoped, we can use the two in similar situations. The `const` variable is bound to the scope of each iteration in a loop (it is redefined each loop), so, although we can't change the value once declared, we can still use them:
 
-```
-for(let i = 0; i < 5; i++) {
+```javascript
+for (let i = 0; i < 5; i++) {
 	const timer = performance.now()
-	console.log(timer) // Outputs the time in milliseconds of each console.log
+	console.log(timer) // Outputs the time in milliseconds each loop
 }
 
 console.log(timer) // ReferenceError: timer is not defined
 ```
 
-When assigning a `const` variable a value, such as `const a = 5`, `a` 
-_contains_ the value `5`. If we assign an array or object to a `const`, instead
-of assigning a direct value, the variable points to a reference in memory of
-that object. This means that while a `const` value can't be redefined, `const` 
-arrays and objects are still mutable:
+When assigning to a `const` variable a value, such as `const a = 5`, `a`
+_contains_ the value `5`. If we assign an object to a `const`, instead of assigning a value, the variable points to a place in memory where that object's data is stored. This means that while a `const` value can't be redefined, the underlying objects they may reference are still mutable:
 
-```
+```javascript
 const humans = []
 console.log(humans) // outputs []
 humans.push('Steve')
@@ -169,15 +167,29 @@ console.log(humans)  // outputs ['Steve']
 
 #### When to Use `const`
 
-Using `const` on any variables you know you wont need to redefine can help
+Using `const` on any variables you know you won't need to redefine can help
 prevent unforeseen errors, such as conflicting name assignments. When you use
 `const`, you're also indicating to future readers of your code that this
-variable is meant to be unchanged
+variable is meant to be fixed.
 
 It is often the best practice to default to using this strictest scope you can
 when declaring variables; if a `let` works in place of a `var`, use `let` to
 keep your variable only within the scope you need. If the variable should
 never be reassigned after declaration, then use `const`.
+
+#### Summary
+
+In general, we want to be 'strict' with our `var`, `let`, `const` usage, that is: pick the tightest bound, most restricting option available. If you aren't already in the habit of doing this, follow this logic flow when deciding what to use until it becomes second nature:
+```javascript
+function pickAVariableType(myVariable) {
+  if ("I can use const and it works correctly") {
+    return const
+  } else if ("I can use let and it works correctly") {
+    return let
+  }
+  return var
+}
+```
 
 ## Arrays and Objects
 
@@ -194,124 +206,117 @@ never be reassigned after declaration, then use `const`.
 ### Arrays
 
 From the labs, we know that arrays are a type of object that can contain
-multiple values in a list. We can declare arrays in a variety of ways:
+multiple values that stay in order. We can declare arrays in a variety of ways:
 
-```
-const w = new Array
+```javascript
+const w = new Array // (e.g. const w = [])
 console.log(w) // []
 const x = new Array(5).fill("hi")
-console.log(x) // ["hi","hi","hi","hi","hi"]
-
-const y = []
-console.log(y) // []
-const z = ["hello"]
-console.log(z) // ["hello"]
+console.log(x) // [ 'hi', 'hi', 'hi', 'hi', 'hi' ]
 ```
 
-Arrays can stored all sorts of data types, and are useful when we need to
-iterate through a list in a specific order:
+Arrays can store all sorts of data types, and are useful when we need to
+iterate through a collection in a specific order:
 
-```
-const a = [1,2,3]
-const b = ["a","b","c"]
+```javascript
+const a = [1, 2, 3]
+const b = ["a", "b", "c"]
 const c = [true, true, false]
 const d = [{id: 1}, {id: 2}]
-const e = [() => console.log("hello"), () => alert("world")]
+const e = [ (() => console.log("hello")), (function(x) {alert(x)}) ]
 ```
 
 Arrays have a number of specific methods that are very useful for reading
-and manipulating lists:
+and manipulating collections. Most of our higher order iterators are built on [forEach](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/foreach), so make sure to review the [documentation for it](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/foreach) now:
 
 #### [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)
 
-```
-const a = [1,2,3,4,5]
+```javascript
+const a = [1, 2, 3, 4, 5]
 const b = a.map(element => element + 1)
 
-console.log(a) // [1,2,3,4,5]
-console.log(b) // [2,3,4,5,6]
+console.log(a) // [ 1, 2, 3, 4, 5 ]
+console.log(b) // [ 2, 3, 4, 5, 6 ]
 ```
 
 #### [Filter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter)
 
-```
-const a = [1,2,3,4,5]
+```javascript
+const a = [1, 2, 3, 4, 5]
 const b = a.filter(element => element > 3)
 
-console.log(a) // [1,2,3,4,5]
-console.log(b) // [4,5]
+console.log(a) // [ 1, 2, 3, 4, 5 ]
+console.log(b) // [ 4, 5 ]
 
 const c = ["a", "b", "c"]
 const d = c.filter(element => element !== "b")
 
-console.log(c) // ["a", "b", "c"]
-console.log(d) // ["a", "c"]
+console.log(c) // [ "a", "b", "c" ]
+console.log(d) // [ "a", "c" ]
 ```
 
 #### [Reduce](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce)
 
-```
-const a = [1,2,3,4,5]
+```javascript
+const a = [1, 2, 3, 4, 5]
 const b = a.reduce((accumulator, currentValue) => accumulator + currentValue)
 
-console.log(a) // [1,2,3,4,5]
+console.log(a) // [ 1, 2, 3, 4, 5 ]
 console.log(b) // 15, the sum of all values in the array
 
 const c = [[1], [2, 3], [4, 5]]
 const d = c.reduce((accumulator, currentValue) => accumulator.concat(currentValue))
 
-console.log(c) // [[1], [2, 3], [4, 5]]
-console.log(d) // [1, 2, 3, 4, 5]
+console.log(c) // [ [1], [2, 3], [4, 5] ]
+console.log(d) // [ 1, 2, 3, 4, 5 ]
 ```
 
 #### [Splice](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice)
 
-```
-const a = ["x","y","z"]
-const b = a.splice(1,1)
+```javascript
+const a = ["x", "y", "z"]
+const b = a.splice(1, 1)
 
-console.log(a) // ["x", "z"]
-console.log(b) // ["y"]
+console.log(a) // [ "x", "z" ]
+console.log(b) // [ "y" ]
 
-const c = ["a","b","d","e"]
-const d = c.splice(2,0,"c")
+const c = ["a", "b", "d", "e"]
+const d = c.splice(2, 0, "c")
 
-console.log(c) // ["a","b","c","d","e"]
+console.log(c) // [ "a", "b", "c", "d", "e" ]
 console.log(d) // []
 ```
 
-#### Using the Spread Operator on Arrays
+#### Using the Spread Operator (Destructuring) on Arrays
 
 The spread operator is a new feature of ES6 that can be used to make a copy of
 an array and in place of array concatenation:
 
-```
-const a = [1,2,3]
+```javascript
+const a = [1, 2, 3]
 const b = a
 
-console.log(b) // [1,2,3]
-console.log(a === b) // true, because they both reference the same point in memory
+console.log(b) // [ 1, 2, 3 ]
+console.log(a === b) // true, because they both reference the same object in memory
 
-const c = [1,2,3]
+const c = [1, 2, 3]
 const d = [...c]
 
-console.log(d) // [1,2,3]
-console.log(c === d) // false, because the spread operator has created a new array reference
+console.log(d) // [ 1, 2, 3 ]
+console.log(c === d) // false, because the spread operator has created a new object in memory
 
-const e = [1,2,3]
+const e = [1, 2, 3]
 const d = [...e, 4]
 
-console.log(d) // [1,2,3,4]
+console.log(d) // [ 1, 2, 3, 4 ]
 ```
 
 ### Objects
 
-Objects, like arrays, can contain multiple values, but instead of storing
-them in a list, each value is store with a corresponding key:
+Objects can contain multiple values, with each value mapped to a corresponding key:
 
-```
-const a = new Object // a === {}
-const b = {} // b === {}
+```javascript
+const a = new Object // (e.g. const a = {})
 ```
 
 Objects are great for storing sets of related data, including functions.
@@ -322,7 +327,7 @@ const a = {name: "Steve", sayHi: () => console.log("hello")}
 
 This makes objects very versatile and handy when you have complex return values.
 
-```
+```javascript
 function returnPerson() {
 	const id = 1
 	const name = "Steve"
@@ -335,55 +340,55 @@ function returnPerson() {
 	}
 }
 
-const a = returnPerson() // a === {id: 1, name: "Steve", sayHi: ƒ}
-a.sayHi() // outputs 'hi'
+const person = returnPerson() // {id: 1, name: "Steve", sayHi: ƒ}
+person.sayHi() // outputs 'hi'
 ```
 
 #### Iterating Using Objects
 
-It is possible to iterate over the values in any object like an array using
-Object.keys():
+It is possible to iterate over both the keys and values of objects:
 
-```
+```javascript
 const a = {id: 1, name: "Steve", password: "123"}
-const b = Object.keys(a)
-console.log(b) // ["id", "name", "password"]
 
-const c = b.map(element => a[element])
-console.log(c) // [1, "Steve", "123"]
+const keys = Object.keys(a)
+console.log(keys) // the object's keys: [ "id", "name", "password" ]
+
+const values = Object.values(a)
+console.log(values) // the object's values: [ 1, "Steve", "123" ]
 ```
 
 #### The Advantages of Instant Lookup
 
-Because each value in an object has a corresponding key, looking up something
-stored in an object is instant. On the other hand, finding something in an
-array requires us to iterate through the array, so the amount of time will
-depend on the length of the array. When dealing with large sets of data, even a
-list, it is more performant to use objects:
+As each value in an object has a corresponding [hash](https://en.wikipedia.org/wiki/Hash_function) (its key), looking up something stored in an object is instant. In contrast, looking up a value in an array requires us to iterate through the array, so the amount of time will depend on the length of the array. When unique values (keys) can be mapped to the data you would like to store (values), objects should be used over arrays for this reason. Consider the following, in which we would like to access the information about a student:
 
-```
-const a = [
-	{id: 1, name: "Steve"},
+```javascript
+
+const studentArr = [
+	{id: 1, name: "Molly"},
 	{id: 2, name: "Mike"}
 ]
-const b = {
-	"Steve": {id: 1, name: "Steve"},
+
+const studentObj = {
+	"Molly": {id: 1, name: "Molly"},
 	"Mike": {id: 2, name: "Mike"}
 }
 
-// to find Mike the array above, you must iterate through it:
-const c = a.find(element => element.name === "Mike")
+// to find Mike we must iterate:
+const mike = studentArr.find(student => student.name === "Mike")
+// first examines {id: 1, name: "Molly"}, then {id: 2, name: "Mike"}
 
 // to find Mike in an object:
-const d = b["Mike"]
+const mike = studentObj["Mike"]
+// jumps straight to {id: 2, name: "Mike"} due to the hashed nature of JavaScript object keys
+
 ```
 
 #### Destructuring Objects
 
-Another new feature in JavaScript is the destructuring of objects into
-variables assigned to the objects values:
+Another new feature in JavaScript is the destructuring of objects into variables named after the keys, with the corresponding values:
 
-```
+```javascript
 const a = {id: 1, name: "Steve", password: "123"}
 const { id, name, password } = a;
 
@@ -393,7 +398,7 @@ console.log(id, name, password) // 1 "Steve" "123"
 This can be useful for making your code more readable and is also handy for
 extracting specific values of an object being passed into a function:
 
-```
+```javascript
 const a = {id: 1, name: "Steve", password: "123"}
 
 sayName(a)
@@ -408,7 +413,7 @@ Instead of having to write out a key and value, if you provide just a variable
 name, JS will interpret it as the key and assign that key the value of the
 variable:
 
-```
+```javascript
 const id = 1
 const a = {id}
 console.log(a) // outputs {id: 1}
@@ -416,11 +421,11 @@ console.log(a) // outputs {id: 1}
 
 #### Using the Spread Operator on Objects
 
-When the spread operator is used on an object, like arrays, it returns
+When the spread operator is used on an object it returns
 a copy of the object it is applied to. This can be useful when we need to
 modify a specific part of an object, or add a key/value:
 
-```
+```javascript
 const a = {id: 1, name: "Steve"}
 const b = Object.assign({}, a)
 
@@ -453,88 +458,64 @@ console.log(g) // {id: 1, name: "Steve", password: "123"}
 
 ---
 
-Arrow functions were introduced in ES6, so there are now a variety of ways to
-declare a function. All 3 of the below functions are valid:
+Arrow functions were introduced in ES6. All three of the below functions are valid:
 
-```
+```javascript
+// 1 named function
 function sayHi() {
 	return "hi"
 }
 
-const sayHi2 = function() {
-	return 'hi'
-}
+// 2 anonymous function
+(function() { return 'hi' })
 
-const sayHi3 = () => {
-	return 'hi'
-}
+// 3 anonymous function
+(() => { return 'hi' })
 
-sayHi();
-sayHi2();
-sayHi3();
+sayHi()
+sayHi2()
+sayHi3()
 ```
 
-One difference to note: if you're assigning a function to a `let` or `const`,
-the function will be initialized and assigned when called, making it only
-accessible _after_ it is defined. Declaring a function in the traditional form,
-`function sayHi() {...}`, will hoist and initialize the function at the
-beginning of the execution context, making it available throughout the scope.
+While both of our anonymous function can be assigned to variables (i.e. `const a = () => { return 'hi' }`, there is an important difference between them and named functions:
+* anonymous functions are initialized and assigned when the program executes the line they are on _while running_ (aka "at runtime"), making it only invokable _after_ its point of definition. Declaring a function in the traditional form, `function sayHi() {...}`, will _hoist_ the function, making it available for use throughout the scope, i.e.:
+
+```javascript
+x() // 'choux is a good cat'
+
+function x() {
+  console.log('choux is a good cat');
+}
+```
 
 #### Arrow Functions
 
-Arrow functions provide a shorter way to declare functions, while also
-providing some additional features. All three of the following function
-definitions return the same value:
+Arrow functions provide a shorter way to define functions, while also providing some additional features. All three of the following functions would return the same value if executed:
 
-```
-const a = () => {
-	const x = 'hi'
-	return x
-}
-const b = () => (
-	const x = 'hi'
-	x
-)
-const c = () => 'hi'
+```javascript
+() => { return 'hi' }
+
+() => ( 'hi' )
+
+() => 'hi'
 ```
 
-Using `{ }` in an arrow function requires an explicit `return` statement to
-indicate which value should be returned. Using `( )` instead allows for the
-implicit return of the last line. For single line functions, no parentheses or
-curly brackets are needed, the function will return the value of the statement.
+In an arrow function using `{ }` does not have an explicit `return` statement, then `undefined` is returned by default. Using `( )` instead allows for the implicit return of the last expression. For single line functions, no parentheses or curly brackets are needed, the function will return the value of the expression.
 
-#### Anonymous Functions and Immediately Invoked Function Expressions
+#### Immediately Invoked Function Expressions
 
-There are often times when we need to declare a function for a specific use,
-but do not need to assign it a name. In these cases, we use 'anonymous'
-functions:
+An Immediately Invoked Function Expressions (IIFE) defines and then invokes a function all in one fell swoop.
 
-```
-const a = [1,2,3]
-
-//normal function declaration
-const addOne = element => {
-	element+1
-}
-
-//to use this function in a map, we pass in the definition
-const b = a.map(addOne) // b === [2,3,4]
-
-//with an anonymous function, we define the function in the same line
-const c = a.map(element => element + 1) // c === [2,3,4]
-```
-
-Immediately Invoked Function Expressions are a type of anonymous function that
-is defined and called immediately:
-
-```
+```javascript
 // normal arrow function definition and call on two lines
 const a = () => console.log('hi')
 a()
 
-//This IIFE defines and calls on the same line
+// This IIFE defines and invokes in one expression
 (() => console.log('hi'))()
 ```
+
+There is no magic behind this. To understand why it is possible, and syntactically logical, answer the question: "What does a function definition _itself_ (not a function invocation!) return?"
 
 #### Closures
 
@@ -545,45 +526,27 @@ a()
 
 ---
 
-In JavaScript, functions are actually a type of object, and can be returned
-from a function in the same way a value can:
+A closure is a fancy name for a simple implementation of JavaScript scoping rules. A closure encapsulates variables, meaning they are accessible from within the closure and not from without. Let's look at this in action:
 
-```
-const a = () => {
-	return () => {
-		console.log('hi')
-	}
-}
-
-const b = a()
-
-console.log(b) // outputs the definition () => {console.log('hi')}
-
-b() // outputs 'hi'
-```
-
-In the above example, b is assigned the definition of the returned function in
-`a()`. This may seem redundant, but it's actually one of the most powerful
-features of JavaScript! Closures have a special ability: any variables declared
-in the same scope as the function being returned will be stored as well.
-
-```
-const a = () => {
-	const x = 5
+```javascript
+function a() {
+	let x = 5
 	return (y) => {
-		console.log(x+y) // x is defined in the closure, y is an input for the returned function
+		console.log(x + y)
 	}
 }
 
 const b = a()
-b(2) // outputs 7, 5 + 2
-const c = a()
-c(3) // outputs 8, 5 + 3
+b(2) // outputs 7
+console.log(x) // ReferenceError: x is not defined
 ```
 
-The variable `x` can be considered a sort of 'private' variable. It can't be
-accessed directly, but can be read, and if declared using `let`, modified.
+The variable `x` can be considered locked inside of the closure that function `a` forms. While it can't be accessed directly from outside of the closure, we see that it can be accessed by invoking functions that exist within the same closure that use the variable! This logically adds up: `let`'s scoping rules allow it to be accessed anywhere within its enclosing block, including children blocks/functions of that enclosing block.
 
 ## Your Challenge
 
-Let's put these concepts to use and practice some of the fundamentals...
+These are core concepts of JavaScript that you should be seeking to master. The more second nature they become, the easier it will be develop solutions to novel problems. Think of yourself as an industrial plumbing engineer: you need to know your pipes, tools, and basic fluid dynamics in order to provide effective solutions for city wide plumbing disasters.
+
+It is not expected that all of these concepts perfectly comfortable right now. Review the links provided and online official documentation and work your way in that direction. We find that one of the best ways to solidify these concepts is to explain them to others, so make sure to engage your peers!
+
+Once you are ready, approach one of your instructors and walk them through these core concepts as if they know programming, but not the nuances of JavaScript.
