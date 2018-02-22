@@ -1,6 +1,6 @@
 # JavaScript Fundamentals Review
 
-This lab is intended as a review of some of the core concepts and syntax of
+This readme is intended as a review of some of the core concepts and syntax of
 modern JavaScript. Links are provided in each section to labs that are
 important to complete and review to ensure a clear understanding of concepts.
 
