@@ -526,21 +526,22 @@ There is no magic behind this. To understand why it is possible, and syntactical
 
 ---
 
-In the above example, the return value of `a` (a function object) is assigned to `b`. This may seem redundant, but it's actually one of the most powerful features of JavaScript! Closures have a special ability: any variables declared in the same scope as the function being returned will be stored as well.
+A closure is a fancy name for a simple implementation of JavaScript scoping rules. A closure encapsulates variables, meaning they are accessible from within the closure and not from without. Let's look at this in action:
 
 ```javascript
-const a = () => {
-	const x = 5
+function a() {
+	let x = 5
 	return (y) => {
-		console.log(x + y) // x is defined in the closure, y is an input for the returned function
+		console.log(x + y)
 	}
 }
 
 const b = a()
 b(2) // outputs 7
+console.log(x) // ReferenceError: x is not defined
 ```
 
-The variable `x` can be considered locked inside of a closure. While it can't be accessed directly from outside of the closure, we see that it can be accessed by invoking functions that exist within the same closure that use the variable! This should look familiar: it follows patterns that we see in both Ruby and JavaScript classes!
+The variable `x` can be considered locked inside of the closure that function `a` forms. While it can't be accessed directly from outside of the closure, we see that it can be accessed by invoking functions that exist within the same closure that use the variable! This logically adds up: `let`'s scoping rules allow it to be accessed anywhere within its enclosing block, including children blocks/functions of that enclosing block.
 
 ## Your Challenge
 
