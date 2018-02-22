@@ -131,7 +131,7 @@ times.
 ### `const`
 
 * Cannot be overwritten
-* Block scoped - variables declared using `const` can only be accessed within the block (same scoping restrictinos as `let`)
+* Block scoped - variables declared using `const` can only be accessed within the block (same scoping restrictions as `let`)
 * Are not **hoisted**, meaning they are not accessible before they are assigned
 * Must be _defined_ when they are _declared_, e.g. a value must be provided when they are created (see `x` example below)
 
@@ -480,7 +480,7 @@ sayHi3()
 While both of our anonymous function can be assigned to variables (i.e. `const a = () => { return 'hi' }`, there is an important difference between them and named functions:
 * anonymous functions are initialized and assigned when the program executes the line they are on _while running_ (aka "at runtime"), making it only invokable _after_ its point of definition. Declaring a function in the traditional form, `function sayHi() {...}`, will _hoist_ the function, making it available for use throughout the scope, i.e.:
 
-```JavaScript
+```javascript
 x() // 'choux is a good cat'
 
 function x() {
@@ -549,4 +549,4 @@ These are core concepts of JavaScript that you should be seeking to master. The 
 
 It is not expected that all of these concepts perfectly comfortable right now. Review the links provided and online official documentation and work your way in that direction. We find that one of the best ways to solidify these concepts is to explain them to others, so make sure to engage your peers!
 
-Once you are ready, approach one of your instructors and walk them through these core concepts as if they know programming, but not the nuances of JavaScript. 
+Once you are ready, approach one of your instructors and walk them through these core concepts as if they know programming, but not the nuances of JavaScript.
