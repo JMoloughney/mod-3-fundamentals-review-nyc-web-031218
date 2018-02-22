@@ -526,19 +526,6 @@ There is no magic behind this. To understand why it is possible, and syntactical
 
 ---
 
-In JavaScript, functions are actually a type of object, and can be returned
-from a function in the same way a value can:
-
-```javascript
-function a() {
-	return () => { console.log('hi') }
-}
-
-const b = a() // `b` is a function object (the return value of `a`)
-
-b() // outputs 'hi'
-```
-
 In the above example, the return value of `a` (a function object) is assigned to `b`. This may seem redundant, but it's actually one of the most powerful features of JavaScript! Closures have a special ability: any variables declared in the same scope as the function being returned will be stored as well.
 
 ```javascript
@@ -553,8 +540,7 @@ const b = a()
 b(2) // outputs 7
 ```
 
-The variable `x` can be considered a locked inside of a closure. It can't be
-accessed directly, but can be read, and if declared using `let`, modified.
+The variable `x` can be considered locked inside of a closure. While it can't be accessed directly from outside of the closure, we see that it can be accessed by invoking functions that exist within the same closure that use the variable! This should look familiar: it follows patterns that we see in both Ruby and JavaScript classes!
 
 ## Your Challenge
 
