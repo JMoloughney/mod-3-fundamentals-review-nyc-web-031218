@@ -545,8 +545,8 @@ The variable `x` can be considered locked inside of the closure that function `a
 
 ## Your Challenge
 
-These are core concepts of JavaScript that you should be seeking to master. The more second nature they become, the easier it will be develop solutions to novel problems. Think of yourself as an industrial plumbing engineer: you need to know your pipes, tools,, and basic fluid dynamics in order to provide effective solutions for city wide plumbing disasters.
+These are core concepts of JavaScript that you should be seeking to master. The more second nature they become, the easier it will be develop solutions to novel problems. Think of yourself as an industrial plumbing engineer: you need to know your pipes, tools, and basic fluid dynamics in order to provide effective solutions for city wide plumbing disasters.
 
-If any of these concepts don't yet feel comfortable, review the links provided and online official documentation. We find that one of the best ways to solidify these concepts is to explain them to others, so make sure to engage your peers!
+It is not expected that all of these concepts perfectly comfortable right now. Review the links provided and online official documentation and work your way in that direction. We find that one of the best ways to solidify these concepts is to explain them to others, so make sure to engage your peers!
 
 Once you are ready, approach one of your instructors and walk them through these core concepts as if they know programming, but not the nuances of JavaScript. 
